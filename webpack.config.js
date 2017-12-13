@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -16,9 +17,17 @@ module.exports = {
       exclude: /node_modules/
     }]
   },
+  devServer: {
+    contentBase: './dist',
+    hot: true
+  },
   output: {
     path: path.resolve('dist'),
     filename: 'bundle.js'
   },
-  plugins: [HtmlWebpackPluginConfig]
+  plugins: [
+    HtmlWebpackPluginConfig,
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin()
+  ]
 }
